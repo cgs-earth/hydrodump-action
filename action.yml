@@ -74,8 +74,6 @@ runs:
         HYDRO_PASSWORD: ${{ inputs.password }}
         HYDRO_RESOURCE: ${{ inputs.resource }}
       run: |
-        docker compose up -d --build
+        docker-compose up -d --build
         docker exec hydrodump hydrodump run
-    - shell: bash
-      run: |
         docker exec database pg_dump ${{ inputs.db }} | gzip > ${{ inputs.db }}.sql.gz
