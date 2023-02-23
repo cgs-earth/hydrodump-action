@@ -64,6 +64,8 @@ runs:
   using: "composite"
   steps:
     - uses: actions/checkout@v3
+      with:
+        repository: cgs-earth/hydrodump-action
     - shell: bash
       env:
         POSTGRES_HOST: database
