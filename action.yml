@@ -81,5 +81,5 @@ runs:
       run: docker exec hydrodump hydrodump run
     - shell: bash
       run: |
-        docker exec database pg_dump --create --jobs 5 --create --dbname ${{ inputs.db }} --username ${{ inputs.dbuser }} --file /data/${{ inputs.db }}.sql
+        docker exec database pg_dump --create --dbname ${{ inputs.db }} --username ${{ inputs.dbuser }} --file /data/${{ inputs.db }}.sql
         gzip -c ./data/${{ inputs.db }}.sql > ${{ inputs.db }}.sql.gz
