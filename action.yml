@@ -85,5 +85,4 @@ runs:
           pg_dump \
             --no-owner \
             --no-acl \
-            ${{ inputs.db }} \
-            | gzip > ${{ inputs.db }}.sql.gz
+            ${{ inputs.db }} | gzip > ${{ inputs.db }}.sql.gz
