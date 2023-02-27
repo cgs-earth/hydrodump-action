@@ -32,8 +32,9 @@ version: '3'
 services:
   hydrodump:
     container_name: hydrodump
-    build:
-      context: hydrodump
+    image: ghcr.io/cgs-earth/hydrodump-action
+    # build:
+    #   context: hydrodump
     environment:
       - POSTGRES_HOST=$POSTGRES_HOST
       - POSTGRES_PORT=$POSTGRES_PORT
@@ -60,6 +61,7 @@ services:
       - POSTGRES_USER=$POSTGRES_USER
       - PGUSER=$POSTGRES_USER
       - POSTGRES_PASS=$POSTGRES_PASSWORD
+      - PGPASSWORD=$POSTGRES_PASSWORD
       - HYDRO_USERNAME=$HYDRO_USERNAME
       - HYDRO_PASSWORD=$HYDRO_PASSWORD
       - HYDRO_RESOURCE=$HYDRO_RESOURCE
