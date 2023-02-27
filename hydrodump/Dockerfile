@@ -33,19 +33,15 @@ ARG TZ="Etc/UTC"
 ARG LANG="en_US.UTF-8"
 
 WORKDIR /hydrodump
-ADD requirements.txt /hydrodump/
+ADD . /hydrodump
 
 RUN \
     apt-get update -y \
     && apt-get upgrade -y \
     && apt-get --no-install-recommends install -y python3-pip \
-    && pip3 install -r requirements.txt
-
-ADD . /hydrodump
-
-RUN \
+    && pip3 install -r requirements.txt \
     # Install hydrodump
-    pip3 install -e . \
+    && pip3 install -e . \
     # Cleanup TODO: remove unused Locales and TZs
     && apt-get clean \
     && apt autoremove -y  \
