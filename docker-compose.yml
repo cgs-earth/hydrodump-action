@@ -50,15 +50,15 @@ services:
 
   database:
     container_name: database
-    image: ghcr.io/baosystems/postgis:14-3.2
+    image: kartoza/postgis:14-3.2
     volumes:
       - ./data:/data
     environment:
       - POSTGRES_HOST=$POSTGRES_HOST
       - POSTGRES_PORT=$POSTGRES_PORT
-      - POSTGRES_DB=$POSTGRES_DB
+      - POSTGRES_DBNAME=$POSTGRES_DB
       - POSTGRES_USER=$POSTGRES_USER
-      - POSTGRES_PASSWORD=$POSTGRES_PASSWORD
+      - POSTGRES_PASS=$POSTGRES_PASSWORD
       - HYDRO_USERNAME=$HYDRO_USERNAME
       - HYDRO_PASSWORD=$HYDRO_PASSWORD
       - HYDRO_RESOURCE=$HYDRO_RESOURCE
