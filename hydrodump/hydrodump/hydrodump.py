@@ -83,7 +83,8 @@ class HydroDump:
             print(err)
 
 
-def handle(hd, f):
+def handle(f):
+    hd = HydroDump()
     hd.download(f)
     hd.transform(f)
     print(f'{f.name} {f.checksum}')
@@ -98,8 +99,8 @@ def run(ctx):
         if f in FILES_EXCLUDE:
             continue
 
-        while len(mp.active_children()) == 3:
+        while len(mp.active_children()) == mp.cpu_count():
             sleep(0.1)
 
-        p = mp.Process(target=handle, args=(hd, f,))
+        p = mp.Process(target=handle, args=(f,))
         p.start()
