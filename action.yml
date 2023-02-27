@@ -76,7 +76,8 @@ runs:
         HYDRO_USERNAME: ${{ inputs.username }}
         HYDRO_PASSWORD: ${{ inputs.password }}
         HYDRO_RESOURCE: ${{ inputs.resource }}
-      run: |
-        docker-compose up -d --build
-        docker exec hydrodump hydrodump run
-        docker exec database pg_dump --no-owner --clean --if-exists ${{ inputs.db }} | gzip > ${{ inputs.db }}.sql.gz
+      run: docker-compose up -d --build
+    - shell: bash
+      run: docker exec hydrodump hydrodump run
+    - shell: bash
+      run: docker exec database pg_dump --create --jobs 5 --create --dbname ${{ inputs.db }} --username ${{ inputs.dbuser }} | gzip > ${{ inputs.db }}.sql.gz
