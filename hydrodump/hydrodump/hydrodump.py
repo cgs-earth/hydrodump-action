@@ -94,7 +94,7 @@ def handle(f):
 @click.pass_context
 def run(ctx):
     hd = HydroDump()
-    spawnable = 2 if mp.cpu_count() == 1 else mp.cpu_count()
+    spawnable = 4 if mp.cpu_count() < 4 else mp.cpu_count()
 
     for f in hd.files():
         if f in FILES_EXCLUDE:
