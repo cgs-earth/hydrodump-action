@@ -29,9 +29,11 @@
 
 import click
 from hsclient import HydroShare
+import multiprocessing as mp
 from pathlib import Path
 import os
 from tempfile import TemporaryDirectory
+from time import sleep
 from shutil import copy, unpack_archive
 import subprocess
 
@@ -81,6 +83,12 @@ class HydroDump:
             print(err)
 
 
+def handle(hd, f):
+    hd.download(f)
+    hd.transform(f)
+    print(f'{f.name} {f.checksum}')
+
+
 @click.command()
 @click.pass_context
 def run(ctx):
@@ -90,6 +98,8 @@ def run(ctx):
         if f in FILES_EXCLUDE:
             continue
 
-        hd.download(f)
-        hd.transform(f)
-        print(f'{f.name} {f.checksum}')
+        while len(mp.active_children()) == mp.cpu_count():
+            sleep(0.1)
+
+        p = mp.Process(target=handle, args=(hd, f,))
+        p.start()
