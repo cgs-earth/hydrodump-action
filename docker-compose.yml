@@ -51,16 +51,16 @@ services:
 
   database:
     container_name: database
-    image: kartoza/postgis:14-3.2
+    image: postgis/postgis:14-3.2-alpine
     volumes:
       - ./data:/data
     environment:
       - POSTGRES_HOST=$POSTGRES_HOST
       - POSTGRES_PORT=$POSTGRES_PORT
-      - POSTGRES_DBNAME=$POSTGRES_DB
+      - POSTGRES_DB=$POSTGRES_DB
       - POSTGRES_USER=$POSTGRES_USER
       - PGUSER=$POSTGRES_USER
-      - POSTGRES_PASS=$POSTGRES_PASSWORD
+      - POSTGRES_PASSWORD=$POSTGRES_PASSWORD
       - PGPASSWORD=$POSTGRES_PASSWORD
       - HYDRO_USERNAME=$HYDRO_USERNAME
       - HYDRO_PASSWORD=$HYDRO_PASSWORD

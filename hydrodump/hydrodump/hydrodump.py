@@ -94,12 +94,13 @@ def handle(f):
 @click.pass_context
 def run(ctx):
     hd = HydroDump()
+    spawnable = 2 if mp.cpu_count() == 1 else mp.cpu_count()
 
     for f in hd.files():
         if f in FILES_EXCLUDE:
             continue
 
-        while len(mp.active_children()) == mp.cpu_count():
+        while len(mp.active_children()) == spawnable:
             sleep(0.1)
 
         p = mp.Process(target=handle, args=(f,))
