@@ -80,5 +80,4 @@ runs:
     - shell: bash
       run: docker exec hydrodump hydrodump run
     - shell: bash
-      run: |
-        docker exec database pg_dump --no-owner --no-acl --clean ${{ inputs.db }} | gzip > ${{ inputs.db }}.sql.gz
+      run: docker exec database pg_dump --no-owner --no-acl --clean ${{ inputs.db }} | gzip > ${{ inputs.db }}.sql.gz
