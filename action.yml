@@ -83,7 +83,7 @@ runs:
       run: |
         docker exec database \
           pg_dump \
-            --format=custom \
             --no-owner \
             --no-acl \
-            ${{ inputs.db }} > ${{ inputs.db }}.dmp
+            ${{ inputs.db }} \
+            | gzip > ${{ inputs.db }}.sql.gz
