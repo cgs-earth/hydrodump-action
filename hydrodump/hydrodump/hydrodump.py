@@ -98,7 +98,7 @@ def run(ctx):
         if f in FILES_EXCLUDE:
             continue
 
-        while len(mp.active_children()) == mp.cpu_count():
+        while len(mp.active_children()) == 3:
             sleep(0.1)
 
         p = mp.Process(target=handle, args=(hd, f,))
