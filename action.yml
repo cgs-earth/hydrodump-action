@@ -79,4 +79,4 @@ runs:
       run: |
         docker-compose up -d --build
         docker exec hydrodump hydrodump run
-        docker exec database pg_dump --clean --if-exists ${{ inputs.db }} | gzip > ${{ inputs.db }}.sql.gz
+        docker exec database pg_dump --no-owner --clean --if-exists ${{ inputs.db }} | gzip > ${{ inputs.db }}.sql.gz
