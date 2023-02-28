@@ -74,6 +74,7 @@ class HydroDump:
     def transform(self, filename: str) -> None:
         file = HYDRO_DATADIR / filename
         command = ('ogr2ogr '
+                   '-t_srs EPSG:4326 '
                    '-f "PostgreSQL" '
                    f'PG:"dbname={POSTGRES_DB} host={POSTGRES_HOST} port={POSTGRES_PORT} user={POSTGRES_USER} password={POSTGRES_PASSWORD}" '  # noqa
                    f'{file} -nln "{file.stem}" -lco OVERWRITE=yes')

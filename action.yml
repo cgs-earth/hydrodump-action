@@ -59,7 +59,7 @@ inputs:
     default: 'ChangeMe'
 outputs:
   backup:
-    description: 'sensorthings server'
+    description: 'hydroshare sql dump'
 runs:
   using: "composite"
   steps:
