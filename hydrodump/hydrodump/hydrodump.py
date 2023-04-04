@@ -32,9 +32,7 @@ from hsclient import HydroShare
 import multiprocessing as mp
 from pathlib import Path
 import os
-from tempfile import TemporaryDirectory
 from time import sleep
-from shutil import copy, unpack_archive
 import subprocess
 
 HYDRO_RESOURCE = os.getenv('HYDRO_RESOURCE')
@@ -63,13 +61,11 @@ class HydroDump:
         return self.rs.files()
 
     def download(self, filename: str) -> None:
-        if (HYDRO_DATADIR / filename).exists():
+        file = HYDRO_DATADIR / filename
+        if file.exists():
             return
-
-        with TemporaryDirectory() as tmp:
-            file = self.rs.file_download(filename, save_path=tmp, zipped=True)
-            unpack_archive(file)
-            copy(Path(filename) / filename, HYDRO_DATADIR)
+        else:
+            self.rs.file_download(filename, save_path=HYDRO_DATADIR)
 
     def transform(self, filename: str) -> None:
         file = HYDRO_DATADIR / filename
@@ -96,13 +92,16 @@ def handle(f):
 def run(ctx):
     hd = HydroDump()
     spawnable = 4 if mp.cpu_count() < 4 else mp.cpu_count()
+    click.echo(f'Using {spawnable} processes')
 
     for f in hd.files():
         if f in FILES_EXCLUDE:
+            click.echo(f'Skipping {f}')
             continue
 
         while len(mp.active_children()) == spawnable:
             sleep(0.1)
 
+        click.echo(f'Processing {f}')
         p = mp.Process(target=handle, args=(f,))
         p.start()

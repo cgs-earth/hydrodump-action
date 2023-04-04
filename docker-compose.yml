@@ -32,9 +32,9 @@ version: '3'
 services:
   hydrodump:
     container_name: hydrodump
-    image: ghcr.io/cgs-earth/hydrodump-action
-    # build:
-    #   context: hydrodump
+    # image: ghcr.io/cgs-earth/hydrodump-action:latest
+    build:
+      context: hydrodump
     environment:
       - POSTGRES_HOST=$POSTGRES_HOST
       - POSTGRES_PORT=$POSTGRES_PORT
