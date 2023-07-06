@@ -61,14 +61,14 @@ class HydroDump:
         return self.rs.files()
 
     def download(self, filename: str) -> None:
-        file = HYDRO_DATADIR / filename
+        file = HYDRO_DATADIR / filename.name
         if file.exists():
-            return
+            print(f'{file} exists, skipping download')
         else:
             self.rs.file_download(filename, save_path=HYDRO_DATADIR)
 
     def transform(self, filename: str) -> None:
-        file = HYDRO_DATADIR / filename
+        file = HYDRO_DATADIR / filename.name
         command = ('ogr2ogr '
                    '-t_srs EPSG:4326 '
                    '-f "PostgreSQL" '
@@ -95,7 +95,7 @@ def run(ctx):
     click.echo(f'Using {spawnable} processes')
 
     for f in hd.files():
-        if f in FILES_EXCLUDE:
+        if f in FILES_EXCLUDE or f.endswith('.geojson'):
             click.echo(f'Skipping {f}')
             continue
 
