@@ -27,7 +27,7 @@
 #
 # =================================================================
 
-FROM osgeo/gdal:ubuntu-small-latest
+FROM ghcr.io/osgeo/gdal:ubuntu-small-latest
 
 ARG TZ="Etc/UTC"
 ARG LANG="en_US.UTF-8"
