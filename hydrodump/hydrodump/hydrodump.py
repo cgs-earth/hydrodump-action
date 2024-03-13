@@ -38,7 +38,7 @@ import subprocess
 HYDRO_RESOURCE = os.getenv('HYDRO_RESOURCE')
 HYDRO_USERNAME = os.getenv('HYDRO_USERNAME')
 HYDRO_PASSWORD = os.getenv('HYDRO_PASSWORD')
-HYDRO_DATADIR = Path('/data')
+HYDRO_DATADIR = Path(os.getenv('HYDRO_DATADIR', '/data'))
 
 POSTGRES_HOST = os.getenv('POSTGRES_HOST', 'database')
 POSTGRES_PORT = os.getenv('POSTGRES_PORT', 5432)
