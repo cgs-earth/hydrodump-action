@@ -118,7 +118,7 @@ setup(
     project_urls={
         'Homepage': 'https://github.com/cgs-earth/sensorthings-action',
         'Source Code': 'https://github.com/cgs-earth/sensorthings-action',
-        'Issue Tracker': 'https://github.com/cgs-earth/sensorthings-action/issues'
+        'Issue Tracker': 'https://github.com/cgs-earth/sensorthings-action/issues' # noqa
     },
     cmdclass={'test': PyTest},
     test_suite='tests.run_tests'
