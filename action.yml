@@ -76,7 +76,7 @@ runs:
         HYDRO_USERNAME: ${{ inputs.username }}
         HYDRO_PASSWORD: ${{ inputs.password }}
         HYDRO_RESOURCE: ${{ inputs.resource }}
-      run: docker-compose up -d --build
+      run: docker compose up -d --build
     - shell: bash
       run: docker exec hydrodump hydrodump run
     - shell: bash
