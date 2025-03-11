@@ -80,4 +80,5 @@ runs:
     - shell: bash
       run: docker exec hydrodump hydrodump run
     - shell: bash
-      run: docker exec database pg_dump --clean --if-exists | gzip > ${{ inputs.db }}.sql.gz
+      run: |
+        docker exec database pg_dump --clean --if-exists | gzip > ${{ inputs.db }}.sql.gz
