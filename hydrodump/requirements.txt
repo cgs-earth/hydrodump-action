@@ -1,4 +1,4 @@
 click
 hsclient
-pydantic<2
+pydantic
 # GDAL>=3.0.0

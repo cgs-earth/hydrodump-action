@@ -2,7 +2,7 @@
 #
 # Authors: Benjamin Webb <bwebb@lincolninst.edu>
 #
-# Copyright (c) 2022 Benjamin Webb
+# Copyright (c) 2025 Benjamin Webb
 #
 # Permission is hereby granted, free of charge, to any person
 # obtaining a copy of this software and associated documentation
@@ -26,9 +26,6 @@
 # OTHER DEALINGS IN THE SOFTWARE.
 #
 # =================================================================
-
-version: '3'
-
 services:
   hydrodump:
     container_name: hydrodump
@@ -50,21 +47,12 @@ services:
       - database
 
   database:
-    container_name: database
+    container_name: $POSTGRES_HOST
     image: postgis/postgis:14-3.2-alpine
-    volumes:
-      - ./data:/data
     environment:
-      - POSTGRES_HOST=$POSTGRES_HOST
       - POSTGRES_PORT=$POSTGRES_PORT
       - POSTGRES_DB=$POSTGRES_DB
-      - PGDATABASE=$POSTGRES_DB
       - POSTGRES_USER=$POSTGRES_USER
-      - PGUSER=$POSTGRES_USER
       - POSTGRES_PASSWORD=$POSTGRES_PASSWORD
-      - PGPASSWORD=$POSTGRES_PASSWORD
-      - HYDRO_USERNAME=$HYDRO_USERNAME
-      - HYDRO_PASSWORD=$HYDRO_PASSWORD
-      - HYDRO_RESOURCE=$HYDRO_RESOURCE
     ports:
       - 5432:5432
