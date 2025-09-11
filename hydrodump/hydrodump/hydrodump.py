@@ -77,7 +77,7 @@ class HydroDump:
                    '-sql "SELECT CASE WHEN ST_NumGeometries(geom) = 1 '
                          'THEN ST_GeometryN(geom,1) '
                          'ELSE geom '
-                         'END AS *, geom '
+                         'END AS geom, * '
                          'FROM input" ' 
                    '-lco OVERWRITE=yes')
         try:
