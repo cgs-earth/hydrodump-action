@@ -73,7 +73,13 @@ class HydroDump:
                    '-t_srs EPSG:4326 '
                    '-f "PostgreSQL" '
                    f'PG:"dbname={POSTGRES_DB} host={POSTGRES_HOST} port={POSTGRES_PORT} user={POSTGRES_USER} password={POSTGRES_PASSWORD}" '  # noqa
-                   f'{file} -nln "{file.stem}" -lco OVERWRITE=yes')
+                   f'{file} -nln "{file.stem}" '
+                   '-sql "SELECT CASE WHEN ST_NumGeometries(geom) = 1 '
+                         'THEN ST_GeometryN(geom,1) '
+                         'ELSE geom '
+                         'END AS geom, * '
+                         'FROM input" ' 
+                   '-lco OVERWRITE=yes')
         try:
             subprocess.run(str(command), check=True, shell=True)
         except subprocess.CalledProcessError as err:
