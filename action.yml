@@ -57,12 +57,28 @@ inputs:
   dbpass:
     description: 'database password'
     default: 'ChangeMe'
+  pygeoapi-config:
+    description: 'Path (in the caller repo) to a pygeoapi config; if set, index each feature provider id_field before dumping'
+    required: false
+    default: ''
 outputs:
   backup:
     description: 'hydroshare sql dump'
 runs:
   using: "composite"
   steps:
+    # Runs before the checkout below, which replaces the caller's workspace
+    # (and with it the caller's pygeoapi config).
+    - name: Generate id_field index SQL
+      if: inputs.pygeoapi-config != ''
+      shell: bash
+      env:
+        PYGEOAPI_CONFIG: ${{ inputs.pygeoapi-config }}
+        GENERATOR: ${{ github.action_path }}/scripts/generate_indexes.py
+      run: |
+        python3 -c 'import yaml' 2>/dev/null || python3 -m pip install --quiet pyyaml
+        python3 "$GENERATOR" "$PYGEOAPI_CONFIG" > "$RUNNER_TEMP/hydrodump-id-indexes.sql"
+        cat "$RUNNER_TEMP/hydrodump-id-indexes.sql"
     - uses: actions/checkout@v3
       with:
         repository: cgs-earth/hydrodump-action
@@ -79,6 +95,14 @@ runs:
       run: docker compose up -d --build
     - shell: bash
       run: docker exec hydrodump hydrodump run
+    # A table named in the config but missing from the database fails here.
+    - name: Create id_field indexes
+      if: inputs.pygeoapi-config != ''
+      shell: bash
+      run: |
+        docker exec -i database psql -v ON_ERROR_STOP=1 \
+          -d ${{ inputs.db }} -U ${{ inputs.dbuser }} \
+          < "$RUNNER_TEMP/hydrodump-id-indexes.sql"
     - shell: bash
       run: |
         docker exec database pg_dump -d ${{ inputs.db }} --no-owner --clean --if-exists | gzip > ${{ inputs.db }}.sql.gz
