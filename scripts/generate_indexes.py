@@ -1,4 +1,5 @@
-"""Print CREATE INDEX statements for every pygeoapi feature provider's id_field.
+"""
+Print CREATE INDEX statements for every pygeoapi feature provider's id_field.
 
 Usage: python3 generate_indexes.py path/to/pygeoapi.config.yml > indexes.sql
 
