@@ -24,11 +24,11 @@ def main(path):
             if provider.get('type') != 'feature' or 'table' not in provider:
                 continue
             if 'id_field' not in provider:
-                sys.exit(f'resource {name!r}: feature provider has no id_field')
+                sys.exit(f'resource {name}: feature provider has no id_field')
             key = (provider['table'], provider['id_field'])
             for ident in key:
                 if not IDENTIFIER.match(str(ident)):
-                    sys.exit(f'resource {name!r}: unsafe identifier {ident!r}')
+                    sys.exit(f'resource {name}: unsafe identifier {ident!r}')
             if key in seen:
                 continue
             seen.add(key)
